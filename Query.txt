@@ -1,0 +1,29 @@
+Create database EntidadFinanciera2M6
+GO 
+USE EntidadFinanciera2M6
+GO
+Create Table Clientes (
+ClienteId Int primary key identity (1,1),
+Nombre Nvarchar(50) not null,
+Identificacion Nvarchar (25) not null
+);
+Create table Cuentas (
+CuentaId int primary key identity (1,1),
+NumeroCuenta Nvarchar (20) not null,
+Saldo Decimal (18,2) not null default 0,
+Activa bit Not null default 1,
+ClienteId Int not null,
+Foreign key (ClienteId) references Clientes (ClienteId)
+);
+
+create table Transacciones (
+TransaccionId int primary key identity (1,1),
+Monto Decimal (18,2) not null,
+Fecha DATETIME NOT NULL DEFAULT GETDATE (),
+Tipo Nvarchar (20) not null,
+Descripcion Nvarchar (200),
+CuentaOrigenId Int,
+CuentaDestinoId Int,
+Foreign key (CuentaOrigenId) references Cuentas (CuentaId),
+Foreign Key (CuentaDestinoId) references Cuentas (CuentaId)
+);
